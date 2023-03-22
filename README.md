@@ -13,7 +13,7 @@ Também é possível acessar os dados no Portal Brasileiro de Dados Abertos:
 
 ## Informações
 
-Por meio dos Microdados, é possível obter um amplo panorama da educação brasileira. Esse é iindubitavelmente um rico acervo sobre a educação superior 
+Por meio dos Microdados, é possível obter um amplo panorama da educação brasileira. Esse é indubitavelmente um rico acervo sobre a educação superior 
 do nosso país e uma fonte segura e eficaz de obtenção de dados, acessíveis aos pesquisadores, estudantes, gestores e sociedade em geral.
 
 Originalmente, o arquivo ZIP Microdados do Censo da Educação Superior 2021, contém um diretório chamado dados. Dentro deste diretório existem dois
