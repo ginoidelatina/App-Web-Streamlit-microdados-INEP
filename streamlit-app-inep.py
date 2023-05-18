@@ -17,7 +17,7 @@ st.set_page_config(page_title='Censo da Educação Superior no Brasil', page_ico
 # Carregando a base de dados
 @st.cache(allow_output_mutation=True, ttl=24*3600)
 def load_data():
-    df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/blob/d1a92afa57e01b96be6f529aa3de9bb6ec9c2a00/dados/microdados2021-INEP.parquet?raw=true')
+    df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/tree/489e976b34a23e5694ed4d791766ed6b9435a06a/dados')
     return df
 
 def cursoSelect(userOptions): # Fitro de pesquisa de acordo com o nome do curso
