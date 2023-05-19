@@ -1,7 +1,7 @@
 matplotlib==3.3.4
 numpy==1.23.3
-pandas==2.0.1
+pandas==1.2.4
 s3fs==2021.11.1 
-streamlit==1.16.0
+streamlit==1.13.0
 pyarrow==4.0.1
 dask==2021.4.0
