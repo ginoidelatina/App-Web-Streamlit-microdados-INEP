@@ -264,7 +264,6 @@ def plotBar(dataframe, hatches, suptitle):
 
     buf = BytesIO()
     plt.savefig(buf, format='png') #format="png", 
-    plt.tight_layout(True)
     st.image(buf, use_column_width=True) #use_column_width=True
     plt.clf()
     return 
@@ -280,7 +279,6 @@ def plotPie(values, labels, subtitle):
     
     buf = BytesIO()
     plt.savefig(buf, format="png")
-    plt.tight_layout(True)
     st.image(buf, use_column_width=True)    #st.pyplot(plt) 
     plt.clf()
 
@@ -296,7 +294,6 @@ def plotLine(x, y, subtitle):
     plt.suptitle(subtitle, fontsize='x-large')
     buf = BytesIO()
     plt.savefig(buf, format="png")
-    plt.tight_layout(True)
     st.image(buf, use_column_width=True)
     plt.clf()
     return 
