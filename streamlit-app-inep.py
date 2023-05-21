@@ -26,9 +26,7 @@ def cursoSelect(userOptions): # Fitro de pesquisa de acordo com o nome do curso
     cursos.sort()
     cursos.insert(0,'')
     curso_select = ''
-    st.write('')
-    curso_select = st.selectbox('Selecione o curso', options = cursos, key = 'ies04', help='ABI (Área Básica de Ingresso')
-    st.write('')
+    curso_select = st.selectbox('Selecione o curso', options = cursos, key = 'ies04', help='ABI (Área Básica de Ingresso) |\n DCN (Diretrizes Curriculares Nacionais)')
     if curso_select == '':
         st.stop()
     else:
@@ -41,9 +39,7 @@ def iesSelect(df): # Filtro de pesquisa de acordo com o nome da instituição
     nome_ies.sort()
     nome_ies.insert(0,'')
     nome_ies_select = ''
-    st.write('')
     nome_ies_select = st.selectbox('Selecione o nome da instituição', options = nome_ies,key='rs03')
-    st.write('')
     if nome_ies_select == '':
        st.stop() 
     else:
@@ -67,9 +63,9 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
             df = dataframe.compute()
             return df, True
         else:
-            df_temp = dataframe['NO_CURSO']
+            df_temp = dataframe['NO_CINE_ROTULO']
             nome_curso = cursoSelect(df_temp)
-            df = dataframe[dataframe.NO_CURSO == nome_curso]
+            df = dataframe[dataframe.NO_CINE_ROTULO == nome_curso]
             df = df.compute()
 
             del df_temp, nome_curso
@@ -78,34 +74,53 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
 
     if uf_select == 'Todas opções' and adm_select != 'Todas opções':
         df = dataframe.loc[dataframe.TP_CATEGORIA_ADMINISTRATIVA == dic_TP_CATEGORIA_ADMINISTRATIVA[adm_select]]
-        df = df.drop(['TP_CATEGORIA_ADMINISTRATIVA', 'SG_UF_IES', 'NO_IES'], axis=1)
-        if pesquisar_curso == 'Não':
-            df = df.drop('NO_CURSO', axis=1)
-            df = df.compute().dropna()
-            return df, True
-
-        else:
-            df_temp = df['NO_CURSO']
-            nome_curso = cursoSelect(df_temp)
-            df = df.loc[df.NO_CURSO == nome_curso]
-            df = df.drop('NO_CURSO', axis=1)
-            df = df.compute().dropna()
-            del df_temp, nome_curso
-            return df, True
+        df = df.drop(['TP_CATEGORIA_ADMINISTRATIVA', 'SG_UF_IES'], axis=1)
+        if pesquisar_ies == 'Não':
+            if pesquisar_curso == 'Não':
+                df = df.drop('NO_CINE_ROTULO', 'NO_IES', axis=1)
+                df = df.compute().dropna()
+                return df, True
+            else:
+                df_temp = df['NO_CINE_ROTULO']
+                nome_curso = cursoSelect(df_temp)
+                df = df.loc[df.NO_CINE_ROTULO == nome_curso]
+                df = df.drop('NO_CINE_ROTULO', 'NO_IES', axis=1)
+                df = df.compute().dropna()
+                del df_temp, nome_curso
+                return df, True
+        if pesquisar_ies == 'Sim':
+            if pesquisar_curso == 'Não':
+                df_temp = df['NO_IES']
+                nome_ies = iesSelect(df_temp)
+                df = df.loc[df.NO_IES == nome_ies]
+                df = df.drop(['NO_IES', 'NO_CINE_ROTULO'], axis=1)
+                df = df.compute().dropna()
+                del df_temp, nome_ies
+                return df, True
+            else:
+                df_temp = df['NO_IES']
+                nome_ies = iesSelect(df_temp)
+                df = df.loc[df.NO_IES == nome_ies]
+                nome_curso = cursoSelect(df.NO_CINE_ROTULO)
+                df = df.loc[df.NO_CINE_ROTULO == nome_curso]
+                df = df.drop(['NO_IES', 'NO_CINE_ROTULO'], axis=1)
+                df = df.compute().dropna()
+                del df_temp, nome_ies, nome_curso
+                return df, True
 
     if uf_select != 'Todas opções' and adm_select == 'Todas opções':
         df = dataframe.loc[dataframe.SG_UF_IES == uf_select]
         if pesquisar_ies == 'Não':
             df = df.drop(['TP_CATEGORIA_ADMINISTRATIVA', 'SG_UF_IES', 'NO_IES'], axis=1)
             if pesquisar_curso == 'Não':
-                df = df.drop('NO_CURSO', axis=1)
+                df = df.drop('NO_CINE_ROTULO', axis=1)
                 df = df.compute().dropna()
                 return df, True
             else:
-                df_temp = df['NO_CURSO']
+                df_temp = df['NO_CINE_ROTULO']
                 nome_curso = cursoSelect(df_temp)
-                df = df.loc[df.NO_CURSO == nome_curso]
-                df = df.drop('NO_CURSO', axis=1)
+                df = df.loc[df.NO_CINE_ROTULO == nome_curso]
+                df = df.drop('NO_CINE_ROTULO', axis=1)
                 df = df.compute().dropna()
                 del df, nome_curso
                 return df, True
@@ -117,7 +132,7 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
                 df_temp = df['NO_IES']
                 nome_ies = iesSelect(df_temp)
                 df = df.loc[df.NO_IES == nome_ies]
-                df = df.drop(['NO_IES', 'NO_CURSO'], axis=1)
+                df = df.drop(['NO_IES', 'NO_CINE_ROTULO'], axis=1)
                 df = df.compute().dropna()
                 del df_temp, nome_ies
                 return df, True
@@ -127,9 +142,9 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
                 df_temp = df['NO_IES']
                 nome_ies = iesSelect(df_temp)
                 df = df.loc[df.NO_IES == nome_ies]
-                nome_curso = cursoSelect(df.NO_CURSO)
-                df = df.loc[df.NO_CURSO == nome_curso]
-                df = df.drop(['TP_CATEGORIA_ADMINISTRATIVA', 'SG_UF_IES', 'NO_IES', 'NO_CURSO'], axis=1)
+                nome_curso = cursoSelect(df.NO_CINE_ROTULO)
+                df = df.loc[df.NO_CINE_ROTULO == nome_curso]
+                df = df.drop(['TP_CATEGORIA_ADMINISTRATIVA', 'SG_UF_IES', 'NO_IES', 'NO_CINE_ROTULO'], axis=1)
                 df = df.compute().dropna()
                 del df_temp, nome_ies, nome_curso
                 return df, True
@@ -141,14 +156,14 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
         if pesquisar_ies == 'Não':
             df = df.drop(['TP_CATEGORIA_ADMINISTRATIVA', 'SG_UF_IES', 'NO_IES'], axis=1)
             if pesquisar_curso == 'Não':
-                df.drop('NO_CURSO', axis=1)
+                df.drop('NO_CINE_ROTULO', axis=1)
                 df = df.compute().dropna()
                 return df, True
             else:
-                df_temp = df['NO_CURSO']
+                df_temp = df['NO_CINE_ROTULO']
                 nome_curso = cursoSelect(df_temp)
-                df = df.loc[df.NO_CURSO == nome_curso]
-                df = df.drop('NO_CURSO', axis=1)
+                df = df.loc[df.NO_CINE_ROTULO == nome_curso]
+                df = df.drop('NO_CINE_ROTULO', axis=1)
                 df = df.compute().dropna()
                 del df_temp, nome_curso
                 return df, True
@@ -159,7 +174,7 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
                 df_temp = df['NO_IES']
                 nome_ies = iesSelect(df_temp)
                 df = df.loc[df.NO_IES == nome_ies]
-                df = df.drop(['NO_IES', 'NO_CURSO'], axis=1)
+                df = df.drop(['NO_IES', 'NO_CINE_ROTULO'], axis=1)
                 df = df.compute().dropna()
                 del df_temp, nome_ies
                 return df, True
@@ -167,24 +182,30 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
                 df_temp = df['NO_IES']
                 nome_ies = iesSelect(df_temp)
                 df = df.loc[df.NO_IES == nome_ies]
-                nome_curso = cursoSelect(df.NO_CURSO)
-                df = df.loc[df.NO_CURSO == nome_curso]
-                df = df.drop(['NO_IES', 'NO_CURSO'], axis=1)
+                nome_curso = cursoSelect(df.NO_CINE_ROTULO)
+                df = df.loc[df.NO_CINE_ROTULO == nome_curso]
+                df = df.drop(['NO_IES', 'NO_CINE_ROTULO'], axis=1)
                 df = df.compute().dropna()
                 return df, True
 
 def selected_attributes():
-    st.write('Selecione os atributos que deseja analisar')
-    checkboxCorRaca = st.checkbox('Cor ou raça')
-    checkboxGenero = st.checkbox('Gênero')
-    checkboxIdade = st.checkbox('Idade')
-    checkboxEnsinoMedio = st.checkbox('Tipo de escola que terminaram o ensino médio')
-    checkboxPCDTGD = st.checkbox('Portabilidade de deficiência, transtorno global do desenvolvimento ou altas habilidades')
+
+    st.markdown('Para obter estatísticas descritivas sobre a educação superior no Brasil, os dados\
+        estão organizados de acordo com os atributos dos alunos matriculados no ensino superior.')
+
+    st.write('Escolha ao menos um dos atributos a seguir:')
+    checkboxCorRaca = st.checkbox('Alunos - Cor ou raça')
+    checkboxGenero = st.checkbox('Alunos - Gênero')
+    checkboxIdade = st.checkbox('Alunos - Idade')
+    checkboxEnsinoMedio = st.checkbox('Alunos - Tipo de escola que terminaram o ensino médio')
+    checkboxPCDTGD = st.checkbox('Alunos - Portabilidade de deficiência, transtorno global do desenvolvimento ou altas habilidades')
 
     options = list([checkboxCorRaca, checkboxGenero, checkboxIdade, checkboxEnsinoMedio, checkboxPCDTGD])
     
+    st.write('')    
     st.write('')
-    button = st.button('Buscar')
+    st.write('')
+    button = st.button('Buscar gráficos')
     st.write('')
     if (button != True):
         st.stop()
