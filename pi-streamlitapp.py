@@ -25,7 +25,7 @@ st.set_page_config(page_title='Projeto Integrador III', page_icon=':bar_chart:',
 # Carregando a base de dados
 @st.cache(allow_output_mutation=True, ttl=24*3600)
 def load_data():
-    df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/blob/0e3a7dd41f641392d1056f42c9aac5d910dc4596/dados/microdados2021-INEP.parquet?raw=true')
+    df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/blob/d1a92afa57e01b96be6f529aa3de9bb6ec9c2a00/dados/microdados2021-INEP.parquet?raw=true')
     return df
 
 def cursoSelect(userOptions): # Fitro de pesquisa de acordo com o nome do curso
