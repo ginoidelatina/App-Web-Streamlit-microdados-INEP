@@ -1,5 +1,6 @@
 # App-Web-Streamlit-microdados-INEP
 # Aplicativo Web Streamlit que dispõe de estatísticas descritivas aplicadas à Educação Superior no Brasil.
+Acesse -> <https://ginoidelatina-app-web-streamlit-micro-streamlit-app-inep-fd5zub.streamlit.app/>
 
 Este projeto utiliza a linguagem python com as bibliotecas pandas, dask e matplotlib, assim como o framework web streamlit. 
 Até o momento da última atualização deste projeto, a fonte de dados  - microdados do censo da educação superior 2021 - encontra-se acessível no 
