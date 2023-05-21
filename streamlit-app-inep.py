@@ -15,7 +15,7 @@ plt.rcParams["figure.autolayout"] = True
 st.set_page_config(page_title='Censo da Educação Superior no Brasil', page_icon=':bar_chart:', initial_sidebar_state='auto')
 
 # Carregando a base de dados
-@st.cache_data(ttl=24*3600)
+@st.cache(allow_output_mutation=True, ttl=24*3600)
 def load_data():
     df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/blob/d1a92afa57e01b96be6f529aa3de9bb6ec9c2a00/dados/microdados2021-INEP.parquet?raw=true')    
     return df
