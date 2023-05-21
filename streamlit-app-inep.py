@@ -5,7 +5,7 @@ from matplotlib.backends.backend_agg import RendererAgg
 _lock = RendererAgg.lock
 import matplotlib.style as style
 from io import BytesIO
-import numpy as np 
+import numpy as np #####################
 import pylab as plb
 import dask.dataframe as dd
 plb.rcParams['font.size'] = 20
@@ -17,7 +17,7 @@ st.set_page_config(page_title='Censo da Educação Superior no Brasil', page_ico
 # Carregando a base de dados
 @st.cache(allow_output_mutation=True, ttl=24*3600)
 def load_data():
-    df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/blob/d1a92afa57e01b96be6f529aa3de9bb6ec9c2a00/dados/microdados2021-INEP.parquet?raw=true')
+    df = dd.read_parquet('https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP/blob/d1a92afa57e01b96be6f529aa3de9bb6ec9c2a00/dados/microdados2021-INEP.parquet?raw=true')    
     return df
 
 def cursoSelect(userOptions): # Fitro de pesquisa de acordo com o nome do curso
@@ -189,6 +189,10 @@ def userSelect(dataframe, uf_select, adm_select, pesquisar_curso, pesquisar_ies)
                 return df, True
 
 def selected_attributes():
+
+    st.markdown('Para obter estatísticas descritivas sobre a educação superior no Brasil, os dados\
+        estão organizados de acordo com os atributos dos alunos matriculados no ensino superior.')
+
     st.write('Escolha ao menos um dos atributos a seguir:')
     checkboxCorRaca = st.checkbox('Alunos - Cor ou raça')
     checkboxGenero = st.checkbox('Alunos - Gênero')
@@ -197,17 +201,12 @@ def selected_attributes():
     checkboxPCDTGD = st.checkbox('Alunos - Portabilidade de deficiência, transtorno global do desenvolvimento ou altas habilidades')
 
     options = list([checkboxCorRaca, checkboxGenero, checkboxIdade, checkboxEnsinoMedio, checkboxPCDTGD])
-
-    st.write('')
-
-    st.caption('Para obter estatísticas descritivas sobre a educação superior no Brasil, os dados\
-        estão organizados de acordo com os atributos dos alunos matriculados no ensino superior. Escolha\
-            ao menos um dos atributos a seguir:')
-
-    st.write('')
-
-    button = st.button('Buscar gráficos')
     
+    st.write('')    
+    st.write('')
+    st.write('')
+    button = st.button('Buscar gráficos')
+    st.write('')
     if (button != True):
         st.stop()
     if (button == True) and (True in options):
@@ -224,11 +223,11 @@ def plotResults(datafiltred, selected_attributes):
             dataEscolaridade(datafiltred)
         if (selected_attributes[4] == True):
             dataPCD(datafiltred)
-        st.success('Para este projeto utilizamos um ciclo de cores amigável para deficiência de visão de cores.\
+        st.info('Para este projeto utilizamos um ciclo de cores amigável para deficiência de visão de cores.\
                 As cores selecionadas mostram-se razoavelmente bem em filtros daltônicos (embora não em monocromático puro). \
                 Para tornar a interpretação dos gráficos mais precisa e acessível, também aplicamos diferentes marcadores para plotar os dados, tais como \
                 formas geométricas (círculos, estrelas e quadrados), bem como diferentes estilos de linhas (linhas sólidas, tracejadas, pontilhadas). \
-                Caso tenha interesse em verificar as fontes de cores e os marcadores utilizados, basta acessar o Github deste projeto.')
+                Caso tenha interesse em verificar as fontes de cores e os marcadores utilizados, basta acessar o Github deste projeto.', icon='ℹ️')
 
 
  
@@ -241,13 +240,13 @@ def plotBar(dataframe, hatches, suptitle):
 
     dataframe = dataframe
     result_pct = dataframe.div(dataframe.sum(1), axis=0)
-    ax = result_pct.plot(kind='bar', align='center',figsize=(14,7), width=3, edgecolor='black', color=CB_color)
+    ax = result_pct.plot(kind='bar', align='center',figsize=(14,7), width=3, edgecolor='black', color=CB_color) #sharex=True, sharey=y  figsize=(10,6)
     bars = ax.patches
     hatches = hatches
     for bar, hatch in zip(bars, hatches):
         bar.set_hatch(hatch)
 
-    plt.legend(labels=dataframe.columns, loc='best', bbox_to_anchor=(1.1, 1.05), fontsize= 'large')  
+    plt.legend(labels=dataframe.columns, loc='best', bbox_to_anchor=(1.1, 1.05), fontsize= 'large') #loc='best' bbox_to_anchor=(1.1, 1.05)
     plt.suptitle(suptitle, fontsize='x-large', y=0.98)
     plt.xticks(fontsize='large',fontweight='light') 
     for spine in plt.gca().spines.values():
@@ -264,32 +263,32 @@ def plotBar(dataframe, hatches, suptitle):
     ax.xaxis.grid(False)
 
     buf = BytesIO()
-    plt.savefig(buf, format='png')  
+    plt.savefig(buf, format='png') #format="png", 
     plt.tight_layout(True)
-    st.image(buf, use_column_width=True) 
+    st.image(buf, use_column_width=True) #use_column_width=True
     plt.clf()
     return 
         
 def plotPie(values, labels, subtitle):
     colors = ['#dede00','#e41a1c', '#999999']
     fig, ax = plt.subplots(figsize=(14,7))
-    ax.pie(values, autopct='%1.1f%%', shadow=False, startangle=60, pctdistance=0.5, colors=colors)  
+    ax.pie(values, autopct='%1.1f%%', shadow=False, startangle=60, pctdistance=0.5, colors=colors)  ####### shadow = False
     fig.suptitle(subtitle, fontsize='x-large')
     ax.axis('equal')
-    plt.legend(labels=labels, loc='best', fontsize = 'large', bbox_to_anchor=(1.1, 1.05)) 
+    plt.legend(labels=labels, loc='best', fontsize = 'large', bbox_to_anchor=(1.1, 1.05)) #
     plt.xticks(fontsize='large',fontweight='light')
     
     buf = BytesIO()
     plt.savefig(buf, format="png")
     plt.tight_layout(True)
-    st.image(buf, use_column_width=True)
+    st.image(buf, use_column_width=True)    #st.pyplot(plt) 
     plt.clf()
 
     return 
 
 
 def plotLine(x, y, subtitle):
-    plt.figure(tight_layout=True, figsize=(18,14))
+    plt.figure(tight_layout=True, figsize=(18,14))#fillstyle = 'full') figsize=(16,12))
     plt.plot(x, y, linestyle='-', marker='o', linewidth=3, markersize=16, dash_capstyle='round', color='#e41a1c')
     plt.ylabel('Quantidade de alunos', fontweight='light', fontsize = 'large') 
     plt.grid(True)
@@ -304,10 +303,7 @@ def plotLine(x, y, subtitle):
 
 def dataCorRaca(dataframe):
     with st.container():
-        st.header(':red[Dados relativos à cor e raça]')
-
-        st.write('')
-        st.write('') 
+        st.subheader('Dados relativos à cor e raça')
 
         # Manipulando atributos relacionados à cor e raça
         columns = ['Não declarado', 'Branca','Preta', 'Parda', 'Amarela', 'Indígena']
@@ -335,14 +331,12 @@ def dataCorRaca(dataframe):
 
     st.write('') 
     st.write('') 
+    st.write('') 
     return None
 
 def dataGenero(dataframe):
     with st.container():
-        st.header(':red[Dados relativos à gênero]')
-
-        st.write('')
-        st.write('') 
+        st.subheader('Dados relativos à gênero')
 
         # Manipulando atributos relacionados à cor e raça
         values = [dataframe['QT_MAT_FEM'].sum(), dataframe['QT_MAT_MASC'].sum()]
@@ -367,15 +361,12 @@ def dataGenero(dataframe):
 
     st.write('')
     st.write('') 
-
+    st.write('') 
     return None
 
 def dataIdade(dataframe):
     with st.container():
-        st.header(':red[Dados relativos à idade]') 
-
-        st.write('')
-        st.write('') 
+        st.subheader('Dados relativos à idade') #st.subheader('Quantidade de matriculados por idade')
 
         # Manipulando atributos relacionados à idade
         # Eixo x
@@ -419,16 +410,13 @@ def dataIdade(dataframe):
         
     st.write('') 
     st.write('') 
-
+    st.write('') 
     return None
 
 def dataEscolaridade(dataframe):
     with st.container():
-        st.header(':red[Dados relativos ao tipo de escola frequentada pelos alunos durante o ensino médio]')
+        st.subheader('Dados relativos ao tipo de escola frequentada pelos alunos durante o ensino médio')
         
-        st.write('')
-        st.write('') 
-
         # Manipulando atributos relacionados ao tipo a escoloridade do ensino médio
         columns = ['Alunos que terminaram\n o ensino médio em\n escolas públicas',\
             'Alunos que terminaram\n o ensino médio em\n escolas privadas',\
@@ -465,15 +453,12 @@ def dataEscolaridade(dataframe):
         
     st.write('')
     st.write('') 
-
+    st.write('') 
     return None
 
 def dataPCD(dataframe):
     with st.container():
-        st.header(':red[Dados relativos à portabilidade de deficiência, transtorno global do desenvolvimento ou altas habilidades/superdotação]')
-
-        st.write('')
-        st.write('') 
+        st.subheader('Dados relativos à portabilidade de deficiência, transtorno global do desenvolvimento ou altas habilidades/superdotação')
 
         # Manipulando atributos relacionados ao tipo a escoloridade do ensino médio
         columns = ['Alunos com deficiência,\n transtorno global do\n desenvolvimento ou altas\n habilidades/superdotação', \
@@ -486,7 +471,6 @@ def dataPCD(dataframe):
         data = pd.DataFrame([values], columns=columns) 
         
         tab1, tab2 = st.tabs(['Gráfico em barra', 'Gráfico de setores'])
-
         # PLOTAR GRÁFICO TIPO BARRA
         with tab1:
             hatches = ('//', 'o', '++')
@@ -510,7 +494,7 @@ def dataPCD(dataframe):
 
     st.write('') 
     st.write('') 
-
+    st.write('') 
     return None 
 
 
@@ -546,6 +530,10 @@ def main():
         st.markdown('[![github](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/ginoidelatina/pi3-streamlitapp-microdadoINEP)</p></blockquote>', unsafe_allow_html=True)
 
     with st.container():
+        st.subheader('Buscar gráficos')
+        st.write('') 
+        st.write('')
+        st.write('')
         # Escolher o Estado
         uf = dataframe['SG_UF_IES']
         uf = uf.compute().unique()
@@ -556,17 +544,17 @@ def main():
         uf_select = st.selectbox('Selecione a Unidade Federativa', options = uf, help='É possível explorar o cenário de todo o Brasil, basta selecionar todas Unidades Federativas do Brasil em "Todas opções"', key='uf01')
         del uf
 
-        # Escolher o tipo de categoria administrativa
         adm_select = st.selectbox('Selecione o tipo de categoria administrativa',\
             options = ['','Todas opções', 'Pública Federal', 'Pública Estadual', 'Pública Municipal', 'Privada com fins lucrativos', 'Privada sem fins lucrativos'], key='adm02',  help= 'Se tiver interesse em analisar as universidades independentemente do tipo da categoria administrativa, então marque "Todas opções".')
         
-        # Escolher pesquisar o curso
+
         pesquisar_curso = st.selectbox('Deseja selecionar um curso específico?', options=['','Sim', 'Não'], key="disabled") 
 
 
         # Iniciando as variáveis
         filterApplied = False
         button = None
+        #del disabled
         if uf_select != '' and adm_select != '':
             if uf_select == 'Todas opções' and adm_select == 'Todas opções':
                 if (pesquisar_curso != ''):
