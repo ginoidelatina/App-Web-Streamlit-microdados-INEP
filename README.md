@@ -33,18 +33,17 @@ e são mais rápidos de verificar. de serem verificados.
 
 ## Instruções
 
-
 ### 1. Pré-requesitos
-  Instale o [Python 3.10](https://www.python.org/downloads)
+  Instale o [Python 3.11](https://www.python.org/downloads)
   
   Instale o [PIP](https://pip.pypa.io/en/stable/installation)
   
   Utilize o editor de texto ou IDE de sua preferência. Para o desenvolvimento deste projeto, foi utilizado o [Visual Studio Code](https://code.visualstudio.com/download).
 
 
+
 ### 2. Configure o seu ambiente
-  Independentemente da ferramenta de gerenciamento de pacotes que você está usando, é recomendado instalar os pacotes utilizados neste projeto em 
-  um ambiente virtual. Isso garante que as dependências deste projeto não afetem nenhum outro projeto Python presente em seu sistema.
+  Independentemente da ferramenta de gerenciamento de pacotes que você está usando, é recomendado instalar os pacotes utilizados neste projeto em um ambiente virtual. Isso garante que as dependências deste projeto não afetem nenhum outro projeto Python presente em seu sistema.
   Abaixo estão algumas ferramentas que você pode usar para gerenciamento de ambiente:
   - pipenv
   - poetry
@@ -52,67 +51,31 @@ e são mais rápidos de verificar. de serem verificados.
   - virtualenv
   - conda
 
-  Neste projeto foi utilizado o anaconda, pois este oferece uma maneira fácil de  obter os principais pacotes de ciências de dados. Apesar da praticidade
-  do anaconda, este apresenta algumas desvantagens relativas ao alto custo de memória e processamento.
+Neste projeto, escolhemos utilizar o **Anaconda** para configurar o ambiente virtual devido à sua praticidade, sendo uma escolha frequente para facilitar a aquisição dos principais pacotes de ciência de dados. Apesar da conveniência, é essencial observar que o Anaconda apresenta algumas desvantagens, como o elevado consumo de memória e processamento.
 
-  Na sequência (seção 2.1), instruirá como preparar o ambiente virtual utilizado por este projeto, se você não tem o interesse em utilizar o anaconda 
-  como ferramenta de gerenciamento de pacotes, então pule para a seção 3.
+  Na sequência (seção 2.1), instruirá como preparar o ambiente virtual utilizado por este projeto, se você não tem o interesse em utilizar o anaconda como ferramenta de gerenciamento de pacotes, então pule para a seção 3.
 
 
 ### 2.1 Configurando o ambiente virtual com o Anaconda
 
 [Clique aqui](https://docs.anaconda.com/anaconda/instal), para acessar o guia de instalação do anaconda, disponível para os principais sistemas operacionais.
 
-
-Após instalar o anaconda em seu sistema, você precisará criar o seu ambiente de desenvolvimento. O Primeiro passo, é ativar o ambiente padrão do
-anaconda em seu sistema. 
+Após a instalação do Anaconda (versão 4.13.0) em seu sistema, é necessário configurar o ambiente de desenvolvimento. O primeiro passo consiste em ativar o ambiente padrão do Anaconda em seu sistema.
 
 
 ### 2.1.1 Ative o ambiente padrão do anaconda (chamado base)
   
-#### Windows
-Ative o ambiente padrão do anaconda no Windows
-
-**Para versões do conda anteriores a 4.6:**
-
-*Se o anaconda estiver instalado no PATH do sistema, digite:*
-
-        C:\Anaconda3\Scripts\activate base 
-	
-*Se o anaconda estiver instalado em um diretório pessoal de usuário, digite:*
-
-        C:\Users\seu_usuário\Anaconda3\Scripts conda activate base 
-	
-**Para o conda 4.6 e versões posteriores:**
-
-*Se o anaconda estiver instalado no PATH do sistema, digite:* 
-
-        C:\Anaconda3\Scripts\activate base
-	
-*Se o anaconda estiver instalado em um diretório pessoal de usuário, digite:*
-
-        C:\Users\seu_usuário\Anaconda3\Scripts conda activate base
-
-Dica: É possível verificar se o anaconda está instalado e em execução no seu sistema, por meio do comando:
-conda --version
-
 #### Linux ou macOS
 Para ativar o anaconda no Linux ou macOS, localize o diretório onde o anaconda está instalado (por padrão, é chamado de anaconda3 ou
 Anaconda3). Dentro do diretório do anaconda, navegue até a pasta ‘bin’, em seguida digite um dos comandos a seguir:
 
-**Para o conda 4.6 e versões posteriores:**
-
-        conda activate
-	
-**Para versões do conda anteriores a 4.6:**
-
-        source activate 
+	source activate base
 
 
 ### 2.1.2 Crie o seu ambiente virtual
 Com o ambiente padrão do conda ativo, crie o seu próprio ambiente virtual. Veja a seguir como fazer isso:
 
-	conda create --name envname python
+	conda create -n envname python=3.11
 
 Agora altere o envname pelo nome que você deseja dar ao seu ambiente virtual. 
 
@@ -122,74 +85,27 @@ anaconda3.
 
 ### 2.1.3 Ative o seu novo ambiente virtual:
   
-**Para o conda 4.6 e versões posteriores:**
-#### Windows
-        
-	conda activate envname
-#### macOS ou Linux
-        
-	conda activate envname 
-
-**Para versões do conda anteriores a 4.6, digite:**
-#### Windows 
-        
-	activate envname
-	
 #### macOS e Linux
         
-	source activate envname  
+	```source activate envname  
 
 
-
-### 2.1.4 Instale as principais ferramentas - utilizadas neste projeto - em seu ambiente conda.
+### 2.1.4 Instale o git em seu ambiente virtual.
   
 #### Github
 Com seu ambiente virtual ativo, instale o git com o comando a seguir: 
       	
 	conda install git
 
-#### Python
-Se o python estiver faltando em seu ambiente virtual, você pode usar o conda para instalá-lo. 
-	
-	conda install python
-
-#### Pip
-Se o pip estiver faltando em seu ambiente virtual, use o conda para instalá-lo.
-      	
-	conda install pip
-
-Depois de ter instalado o pip, adicione os pacotes do requirements.txt deste projeto. Veja como fazer isso na seção 3.
-
-
-
-#### Desativar o conda (opcional).
-
-Se você quiser alternar projetos ou sair do seu ambiente virtual, basta executar:
-      	
-	conda deactivate ou deactivate
-	
-Se você quiser entrar novamente no ambiente virtual, basta seguir as mesmas instruções acima sobre como ativar um ambiente virtual. Não há necessidade
-de reinstalar os programas e nem de recriar o ambiente virtual.
 
 
 ### 3. Instalando este repositório git em sua máquina local.
   
-Importante: Independentemente da ferramenta de gerenciamento de pacotes que você está usando, não esqueça de ter em seu ambiente virtual o python e o o
-pip. Também é recomendado instalar o git em seu ambiente.
-
-
-### 3.1 Copie este repositório com o git em sua máquina local.
+**Importante:** Certifique-se de que seu ambiente virtual inclua o Python, o Pip e o Git, independentemente da ferramenta de gerenciamento de pacotes que você estiver utilizando.
   
 Com o seu ambiente virtual ativo, utilize o git para copiar este repositório em seu diretório local. Use o comando:
       	
-	git clone https://github.com/ginoidelatina/projetointegradorII.git
-
-### 3.2- Copie este repositório com o pip (é mais recomendável a opção acima).
-
-Utilize o pip instalado em seu ambiente virtual ativo, para copiar o projeto deste repositório git em seu diretório local. Para isso, execute o
-comando:
-      	
-	pip install -e git+https://github.com/ginoidelatina/projetointegradorII.git#egg=projetointegradorII
+	git clone https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP.git
 
 
 ### 4. Instale os pacotes disponíveis no arquivo requirements.txt
