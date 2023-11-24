@@ -34,9 +34,9 @@ e são mais rápidos de verificar. de serem verificados.
 ## Instruções
 
 ### 1. Pré-requesitos
-  Instale o [Python 3.11](https://www.python.org/downloads)
+  Instale o [Python 3.11.0](https://www.python.org/downloads)
   
-  Instale o [PIP](https://pip.pypa.io/en/stable/installation)
+  Instale o [PIP 23.3.1](https://pip.pypa.io/en/stable/installation)
   
   Utilize o editor de texto ou IDE de sua preferência. Para o desenvolvimento deste projeto, foi utilizado o [Visual Studio Code](https://code.visualstudio.com/download).
 
@@ -57,10 +57,10 @@ Neste projeto, escolhemos utilizar o **Anaconda** para configurar o ambiente vir
 
 
 ### 2.1 Configurando o ambiente virtual com o Anaconda
-
+#### Instale a versão 4.13.0 do Anaconda.
 [Clique aqui](https://docs.anaconda.com/anaconda/instal), para acessar o guia de instalação do anaconda, disponível para os principais sistemas operacionais.
 
-Após a instalação do Anaconda (versão 4.13.0) em seu sistema, é necessário configurar o ambiente de desenvolvimento. O primeiro passo consiste em ativar o ambiente padrão do Anaconda em seu sistema.
+Após a instalação do Anaconda em seu sistema, é necessário configurar o ambiente de desenvolvimento. O primeiro passo consiste em ativar o ambiente padrão do Anaconda em seu sistema.
 
 
 ### 2.1.1 Ative o ambiente padrão do anaconda (chamado base)
@@ -75,24 +75,26 @@ Anaconda3). Dentro do diretório do anaconda, navegue até a pasta ‘bin’, em
 ### 2.1.2 Crie o seu ambiente virtual
 Com o ambiente padrão do conda ativo, crie o seu próprio ambiente virtual. Veja a seguir como fazer isso:
 
-	conda create -n envname python=3.11
+	conda create -n envname python=3.11.0
 
 Agora altere o envname pelo nome que você deseja dar ao seu ambiente virtual. 
 
-Importante: Por padrão, o diretório de seu ambiente virtual estará localizado dentro de uma pasta chamada envs, que é um subdiretório padrão do
-anaconda3. 
+
+### 2.1.3 Localize o diretório criado para o seu ambiente virtual.
+Por padrão, o diretório de seu ambiente virtual estará localizado dentro de uma pasta chamada envs, que é um subdiretório padrão do anaconda3.
+	
+ 	~/anaconda3/envs/
 
 
-### 2.1.3 Ative o seu novo ambiente virtual:
-  
+### 2.1.4 Ative o seu novo ambiente virtual:
+No diretório do seu ambiente virtual, execute o seguinte comando:
+
 #### macOS e Linux
         
 	```source activate envname  
 
 
-### 2.1.4 Instale o git em seu ambiente virtual.
-  
-#### Github
+### 2.1.5 Instale o git em seu ambiente virtual.
 Com seu ambiente virtual ativo, instale o git com o comando a seguir: 
       	
 	conda install git
@@ -101,22 +103,24 @@ Com seu ambiente virtual ativo, instale o git com o comando a seguir:
 
 ### 3. Instalando este repositório git em sua máquina local.
   
-**Importante:** Certifique-se de que seu ambiente virtual inclua o Python, o Pip e o Git, independentemente da ferramenta de gerenciamento de pacotes que você estiver utilizando.
+***Nota:** Certifique-se de que seu ambiente virtual inclua o Python, o Pip e o Git, independentemente da ferramenta de gerenciamento de pacotes que você estiver utilizando.*
   
-Com o seu ambiente virtual ativo, utilize o git para copiar este repositório em seu diretório local. Use o comando:
+Com o ambiente virtual configurado, utilize o Git para clonar este repositório no diretório correspondente ao seu ambiente virtual. Use o comando:
       	
 	git clone https://github.com/ginoidelatina/App-Web-Streamlit-microdados-INEP.git
 
 
+
 ### 4. Instale os pacotes disponíveis no arquivo requirements.txt
-Depois de ter copiado este repositório em sua máquina local, navegue até o diretório onde está localizado o arquivo requirements.txt. 
-Em seguida, use o pip para instalar as dependências de requirements.txt
+Após clonar este repositório Git em sua máquina local, vá para a subpasta do projeto "App-Web-Streamlit-microdados-INEP.git" onde o arquivo requirements.txt está localizado.
+
+Em seguida, utilize o pip para instalar as dependências listadas no arquivo `requirements.txt`.
 
 	pip install -r requirements.txt
 
 
-### 5. Execute o código.
 
+### 5. Execute o código.
 Para rodar o App Web, basta navegar até o diretório onde encontra-se o programa streamlit-app-inep. Em seguida, execute o seguinte script:
 
 	streamlit run streamlit-app-inep.py 
