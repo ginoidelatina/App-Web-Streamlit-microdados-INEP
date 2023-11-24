@@ -91,7 +91,7 @@ No diretório do seu ambiente virtual, execute o seguinte comando:
 
 #### macOS e Linux
         
-	```source activate envname  
+	source activate envname  
 
 
 ### 2.1.5 Instale o git em seu ambiente virtual.
@@ -112,7 +112,7 @@ Com o ambiente virtual configurado, utilize o Git para clonar este repositório 
 
 
 ### 4. Instale os pacotes disponíveis no arquivo requirements.txt
-Após clonar este repositório Git em sua máquina local, vá para a subpasta do projeto "App-Web-Streamlit-microdados-INEP.git" onde o arquivo requirements.txt está localizado.
+Após clonar este repositório Git em sua máquina local, vá para a pasta "App-Web-Streamlit-microdados-INEP.git" onde o arquivo `requirements.txt está localizado.
 
 Em seguida, utilize o pip para instalar as dependências listadas no arquivo `requirements.txt`.
 
